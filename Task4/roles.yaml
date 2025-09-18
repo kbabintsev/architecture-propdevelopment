@@ -1,0 +1,37 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: secure-space
+  name: secret-reader-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-devops-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "logs"]
+    verbs: ["create", "delete", "get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer-role
+  namespace: development
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "logs"]
+    verbs: ["create", "delete", "get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-reader-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "logs"]
+    verbs: ["get", "list", "watch"]
